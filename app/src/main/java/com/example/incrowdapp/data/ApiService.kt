@@ -7,24 +7,25 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-const val BASE_URL = "https://feeds.incrowdsports.com/provider/opta/football/v1/matches/"
+const val BASE_URL = "https://feeds.incrowdsports.com/provider/opta/football/v1/matches/987597/"
 
-interface CallApi {
+interface ApiService {
 
-    @GET("987597/commentary")
+    @GET("commentary")
     fun getCommentary(): Call<Commentary>
 
-    @GET("987597")
+    @GET(".")
     fun getMatch(): Call<Match>
 
     companion object {
-        operator fun invoke(): CallApi {
+
+        operator fun invoke(): ApiService {
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(CallApi::class.java)
+                .create(ApiService::class.java)
         }
     }
 }
