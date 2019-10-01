@@ -3,13 +3,16 @@ package com.example.incrowdapp.ui
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrowdapp.R
+import com.example.incrowdapp.data.match.TeamPlayer
+import com.example.incrowdapp.ui.team_stats.PlayersTeamAdapter
 import com.example.incrowdapp.ui.team_stats.TeamStatsViewModel
 import com.example.incrowdapp.utils.ImageFromUrlUtils
 import com.example.incrowdapp.utils.InjectorUtils
@@ -21,6 +24,7 @@ class TeamStatsActivity : AppCompatActivity() {
     private lateinit var teamNameView: TextView
     private lateinit var teamIconView: ImageView
     private lateinit var playerListView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     private lateinit var viewModel: TeamStatsViewModel
 
@@ -70,6 +74,9 @@ class TeamStatsActivity : AppCompatActivity() {
 
             val imageUrl = it.data?.homeTeam?.imageUrl
             setImageAsync(imageUrl)
+
+            val players: List<TeamPlayer?> = it.data?.homeTeam?.players.orEmpty()
+            setRecyclerViewData(players.sortedBy { it?.position })
         })
     }
 
@@ -82,11 +89,23 @@ class TeamStatsActivity : AppCompatActivity() {
             val imageUrl = it.data?.awayTeam?.imageUrl
             setImageAsync(imageUrl)
 
-
+            val players: List<TeamPlayer?> = it.data?.awayTeam?.players.orEmpty()
+            setRecyclerViewData(players.sortedBy { it?.position })
         })
     }
 
-    private fun setImageAsync(imageUrl:String?) {
+    private fun setRecyclerViewData(players: List<TeamPlayer?>) {
+        recyclerView = playerListView.apply {
+            setHasFixedSize(true)
+
+            layoutManager = LinearLayoutManager(context)
+
+            adapter = PlayersTeamAdapter(players)
+        }
+
+    }
+
+    private fun setImageAsync(imageUrl: String?) {
         if (imageUrl != null) {
             AsyncTask.execute {
                 Runnable {
