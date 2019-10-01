@@ -1,5 +1,6 @@
 package com.example.incrowdapp.ui
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +21,8 @@ import java.net.URL
 import com.example.incrowdapp.R
 import android.graphics.Bitmap
 import android.os.AsyncTask
+import android.widget.LinearLayout
+import androidx.appcompat.widget.LinearLayoutCompat
 import java.net.HttpURLConnection
 
 
@@ -28,8 +31,10 @@ class MatchFeedActivity : AppCompatActivity() {
     // Views
     private lateinit var homeTeamTitleView: TextView
     private lateinit var homeTeamIconView: ImageView
+    private lateinit var homeTeamLayoutView: LinearLayoutCompat
     private lateinit var awayTeamTitleView: TextView
     private lateinit var awayTeamIconView: ImageView
+    private lateinit var awayTeamLayoutView: LinearLayoutCompat
     private lateinit var recyclerView: RecyclerView
     private lateinit var scoreTextView: TextView
     private lateinit var venueTextView: TextView
@@ -49,10 +54,25 @@ class MatchFeedActivity : AppCompatActivity() {
     private fun initializeViews() {
         homeTeamTitleView = homeTeamTitle
         homeTeamIconView = homeTeamIcon
+        homeTeamLayoutView = homeTeamLayout
         awayTeamTitleView = awayTeamTitle
         awayTeamIconView = awayTeamIcon
+        awayTeamLayoutView = awayTeamLayout
         scoreTextView = teamScore
         venueTextView = venueName
+
+        lateinit var intent: Intent
+        homeTeamLayoutView.setOnClickListener {
+            intent = Intent(this, TeamStatsActivity::class.java)
+            intent.putExtra("isHomeTeam",true)
+            startActivity(intent)
+        }
+
+        awayTeamLayoutView.setOnClickListener {
+            intent = Intent(this, TeamStatsActivity::class.java)
+            intent.putExtra("isHomeTeam",false)
+            startActivity(intent)
+        }
     }
 
     private fun initializeViewModel() {
