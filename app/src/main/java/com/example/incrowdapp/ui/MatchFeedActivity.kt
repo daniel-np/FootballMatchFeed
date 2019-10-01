@@ -1,7 +1,6 @@
 package com.example.incrowdapp.ui
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -17,13 +16,10 @@ import com.example.incrowdapp.ui.match_feed.MatchFeedViewModel
 import com.example.incrowdapp.utils.InjectorUtils
 import kotlinx.android.synthetic.main.activity_match_feed.*
 import java.lang.StringBuilder
-import java.net.URL
 import com.example.incrowdapp.R
-import android.graphics.Bitmap
 import android.os.AsyncTask
-import android.widget.LinearLayout
 import androidx.appcompat.widget.LinearLayoutCompat
-import java.net.HttpURLConnection
+import com.example.incrowdapp.utils.ImageFromUrlUtils
 
 
 class MatchFeedActivity : AppCompatActivity() {
@@ -64,13 +60,13 @@ class MatchFeedActivity : AppCompatActivity() {
         lateinit var intent: Intent
         homeTeamLayoutView.setOnClickListener {
             intent = Intent(this, TeamStatsActivity::class.java)
-            intent.putExtra("isHomeTeam",true)
+            intent.putExtra("isHomeTeam", true)
             startActivity(intent)
         }
 
         awayTeamLayoutView.setOnClickListener {
             intent = Intent(this, TeamStatsActivity::class.java)
-            intent.putExtra("isHomeTeam",false)
+            intent.putExtra("isHomeTeam", false)
             startActivity(intent)
         }
     }
@@ -91,23 +87,23 @@ class MatchFeedActivity : AppCompatActivity() {
         viewModel.getMatch().observe(this, Observer {
 
             val homeUrl = it.data?.homeTeam?.imageUrl
-            if (it.data?.homeTeam?.imageUrl != null) {
+            if (homeUrl != null) {
                 AsyncTask.execute {
                     Runnable {
-                        val bitmap = getImageFromUrlString(homeUrl!!)
-                        runOnUiThread{
-                            Runnable { homeTeamIconView.setImageBitmap(bitmap)}.run()
+                        val bitmap = ImageFromUrlUtils.fetchImage(homeUrl)
+                        runOnUiThread {
+                            Runnable { homeTeamIconView.setImageBitmap(bitmap) }.run()
                         }
                     }.run()
                 }
             }
             val awayUrl = it.data?.awayTeam?.imageUrl
-            if (it.data?.awayTeam?.imageUrl != null) {
+            if (awayUrl != null) {
                 AsyncTask.execute {
                     Runnable {
-                        val bitmap = getImageFromUrlString(awayUrl!!)
-                        runOnUiThread{
-                            Runnable { awayTeamIconView.setImageBitmap(bitmap)}.run()
+                        val bitmap = ImageFromUrlUtils.fetchImage(awayUrl)
+                        runOnUiThread {
+                            Runnable { awayTeamIconView.setImageBitmap(bitmap) }.run()
                         }
                     }.run()
                 }
@@ -146,15 +142,4 @@ class MatchFeedActivity : AppCompatActivity() {
         })
     }
 
-    private fun getImageFromUrlString(urlString: String): Bitmap? {
-        val url = URL(urlString)
-        val urlConnection = url.openConnection() as HttpURLConnection
-        lateinit var image: Bitmap
-        try {
-            image = BitmapFactory.decodeStream(urlConnection.inputStream)
-        } finally {
-            urlConnection.disconnect()
-        }
-        return image
-    }
 }
