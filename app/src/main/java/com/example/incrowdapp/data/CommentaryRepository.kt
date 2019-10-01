@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 
 class CommentaryRepository(private val apiService: ApiService) {
 
-    fun getCommentaryLiveData(): LiveData<Commentary>? {
+    fun getCommentaryLiveData(): LiveData<Commentary> {
 
         return LiveDataReactiveStreams.fromPublisher(getCommentaryFromApi()
             .subscribeOn(Schedulers.io())

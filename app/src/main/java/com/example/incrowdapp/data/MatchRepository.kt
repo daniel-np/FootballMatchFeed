@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class MatchRepository(private val apiService: ApiService) {
 
-    fun getMatchLiveData(): LiveData<Match>? {
+    fun getMatchLiveData(): LiveData<Match> {
 
         return LiveDataReactiveStreams.fromPublisher(getMatchFromApi()
             .subscribeOn(Schedulers.io())
