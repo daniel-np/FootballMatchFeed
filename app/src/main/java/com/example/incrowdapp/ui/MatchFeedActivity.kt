@@ -14,7 +14,6 @@ import com.example.incrowdapp.data.commentary.CommentaryEntry
 import com.example.incrowdapp.ui.match_feed.CommentaryFeedAdapter
 import com.example.incrowdapp.ui.match_feed.MatchFeedViewModel
 import com.example.incrowdapp.utils.InjectorUtils
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_match_feed.*
 import java.lang.StringBuilder
 import java.net.URL
@@ -35,7 +34,6 @@ class MatchFeedActivity : AppCompatActivity() {
     private lateinit var scoreTextView: TextView
     // Model
     private lateinit var viewModel: MatchFeedViewModel
-    private lateinit var commentaryDataSubscription: Disposable
     private lateinit var commentaryEntries: List<CommentaryEntry>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,7 +132,7 @@ class MatchFeedActivity : AppCompatActivity() {
         val urlConnection = url.openConnection() as HttpURLConnection
         lateinit var image: Bitmap
         try {
-            image = BitmapFactory.decodeStream(urlConnection.inputStream);
+            image = BitmapFactory.decodeStream(urlConnection.inputStream)
         } finally {
             urlConnection.disconnect()
         }
