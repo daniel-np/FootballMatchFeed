@@ -32,6 +32,7 @@ class MatchFeedActivity : AppCompatActivity() {
     private lateinit var awayTeamIconView: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var scoreTextView: TextView
+    private lateinit var venueTextView: TextView
     // Model
     private lateinit var viewModel: MatchFeedViewModel
     private lateinit var commentaryEntries: List<CommentaryEntry>
@@ -51,21 +52,22 @@ class MatchFeedActivity : AppCompatActivity() {
         awayTeamTitleView = awayTeamTitle
         awayTeamIconView = awayTeamIcon
         scoreTextView = teamScore
+        venueTextView = venueName
     }
 
     private fun initializeViewModel() {
-        val factory = InjectorUtils().provideMatchViewModelFactory()
+        val factory = InjectorUtils.provideMatchViewModelFactory()
         viewModel = ViewModelProviders.of(this, factory)
             .get(MatchFeedViewModel::class.java)
     }
 
     private fun initializeUi() {
 
-        setIconsToUi()
+        setMatchDataToUi()
         setCommentaryDataToUi()
     }
 
-    private fun setIconsToUi() {
+    private fun setMatchDataToUi() {
         viewModel.getMatch().observe(this, Observer {
 
             val homeUrl = it.data?.homeTeam?.imageUrl
@@ -91,6 +93,8 @@ class MatchFeedActivity : AppCompatActivity() {
                 }
             }
 
+            venueTextView.text = it.data?.venue?.name
+
         })
     }
 
@@ -110,16 +114,11 @@ class MatchFeedActivity : AppCompatActivity() {
             // Commentaries
             commentaryEntries = it.data?.commentaryEntries.orEmpty()
             recyclerView = commentaryFeed.apply {
-                // use this setting to improve performance if you know that changes
-                // in content do not change the layout size of the RecyclerView
                 setHasFixedSize(true)
 
-                // use a linear layout manager
                 layoutManager = LinearLayoutManager(context)
 
-                // specify an viewAdapter (see also next example)
-                adapter =
-                    CommentaryFeedAdapter(commentaryEntries)
+                adapter = CommentaryFeedAdapter(commentaryEntries)
             }
             val itemDecor =
                 DividerItemDecoration(recyclerView.context, DividerItemDecoration.HORIZONTAL)
