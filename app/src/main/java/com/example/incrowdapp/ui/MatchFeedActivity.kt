@@ -136,9 +136,6 @@ class MatchFeedActivity : AppCompatActivity() {
 
                 adapter = CommentaryFeedAdapter(commentaryEntries)
             }
-            val itemDecor =
-                DividerItemDecoration(recyclerView.context, DividerItemDecoration.HORIZONTAL)
-            recyclerView.addItemDecoration(itemDecor)
         })
     }
 
