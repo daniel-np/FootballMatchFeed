@@ -3,7 +3,7 @@ package com.example.incrowdapp.data.match
 
 import com.google.gson.annotations.SerializedName
 
-data class PlayerXXX(
+data class TeamPlayer(
     @SerializedName("captain")
     val captain: Boolean?,
     @SerializedName("firstName")
