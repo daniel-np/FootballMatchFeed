@@ -13,7 +13,7 @@ data class HomeTeam(
     @SerializedName("name")
     val name: String?,
     @SerializedName("players")
-    val players: List<PlayerXXX?>?,
+    val players: List<TeamPlayer?>?,
     @SerializedName("score")
     val score: Int?,
     @SerializedName("shortName")

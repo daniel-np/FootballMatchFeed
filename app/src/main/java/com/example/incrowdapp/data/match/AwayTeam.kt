@@ -13,7 +13,7 @@ data class AwayTeam(
     @SerializedName("name")
     val name: String?,
     @SerializedName("players")
-    val players: List<Player?>?,
+    val players: List<TeamPlayer?>?,
     @SerializedName("score")
     val score: Int?,
     @SerializedName("shortName")
