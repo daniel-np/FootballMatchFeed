@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrowdapp.R
@@ -68,28 +67,30 @@ class TeamStatsActivity : AppCompatActivity() {
 
     private fun initializeHomeTeamUi() {
 
-        viewModel.getMatch().observe(this, Observer {
+        viewModel.getMatch().observe(this, Observer { it ->
+            val homeTeam = it.data?.homeTeam
 
-            teamNameView.text = it.data?.homeTeam?.name
+            teamNameView.text = homeTeam?.name
 
-            val imageUrl = it.data?.homeTeam?.imageUrl
+            val imageUrl = homeTeam?.imageUrl
             setImageAsync(imageUrl)
 
-            val players: List<TeamPlayer?> = it.data?.homeTeam?.players.orEmpty()
+            val players: List<TeamPlayer?> = homeTeam?.players.orEmpty()
             setRecyclerViewData(players.sortedBy { it?.position })
         })
     }
 
 
     private fun initializeAwayTeamUi() {
-        viewModel.getMatch().observe(this, Observer {
+        viewModel.getMatch().observe(this, Observer { it ->
+            val awayTeam = it.data?.awayTeam
 
-            teamNameView.text = it.data?.awayTeam?.name
+            teamNameView.text = awayTeam?.name
 
-            val imageUrl = it.data?.awayTeam?.imageUrl
+            val imageUrl = awayTeam?.imageUrl
             setImageAsync(imageUrl)
 
-            val players: List<TeamPlayer?> = it.data?.awayTeam?.players.orEmpty()
+            val players: List<TeamPlayer?> = awayTeam?.players.orEmpty()
             setRecyclerViewData(players.sortedBy { it?.position })
         })
     }
