@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="titleBackground">#CFE7E7</color>
     <color name="cardBackground">#88FFE199</color>
+    <color name="cardTitleBackground">#FFE199</color>
 </resources>
