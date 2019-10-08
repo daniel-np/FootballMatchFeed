@@ -1,19 +1,25 @@
 package com.example.matchcentreapp.ui.team_stats
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.matchcentreapp.R
 import com.example.matchcentreapp.data.match.TeamPlayer
 import java.lang.StringBuilder
+import kotlinx.android.synthetic.main.layout_player_item.view.*
 
 
 class PlayersTeamAdapter (private val players: List<TeamPlayer?>) :
     RecyclerView.Adapter<PlayersTeamAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var playerItemLayout = itemView.playerItemLayout
+        var minutesPlayedTv = itemView.minutesPlayed
+        var playerStatsLayout: LinearLayout = itemView.playerStatsLayout
         var playerNameView: TextView = itemView.findViewById(R.id.playerNameItem)
         var playerPositionView: TextView = itemView.findViewById(R.id.playerPositionItem)
         var playerShirtNumberView: TextView = itemView.findViewById(R.id.playerShirtNumberItem)
@@ -46,6 +52,22 @@ class PlayersTeamAdapter (private val players: List<TeamPlayer?>) :
         holder.playerPositionView.text = players[position]?.position
         val isCaptain = players[position]?.captain ?: false
         holder.playerCaptainView.text = if(isCaptain) "Captain" else ""
+
+        holder.playerItemLayout.setOnClickListener {
+            Log.d("OnClickItem:", position.toString())
+            if(holder.playerStatsLayout.visibility == View.GONE) {
+                val playedTime = players[position]?.playerStats?.minutesPlayed
+                val stringBuilder = StringBuilder()
+                stringBuilder.append("Played time: ")
+                stringBuilder.append(if (playedTime != null) "$playedTime min" else "0 min")
+                holder.minutesPlayedTv.text = stringBuilder
+                holder.playerStatsLayout.visibility = View.VISIBLE
+            } else {
+                holder.playerStatsLayout.visibility = View.GONE
+            }
+
+
+        }
     }
 }
 
