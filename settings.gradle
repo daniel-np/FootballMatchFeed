@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='inCrowdApp'
+rootProject.name='matchCentre'
