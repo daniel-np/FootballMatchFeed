@@ -5,7 +5,7 @@ Commentary feed for a specific football match
 
 Shows both teams with their logo, the score of the match, and the venue its played on.
 Bellow is a live feed of commentaries. By clicking on the team name or crest one will be routed to the Team Stats View.
-![Screenshot_1570610118](https://user-images.githubusercontent.com/21195947/66465140-3359a980-ea78-11e9-86aa-05159d1fe35c.png)
+<img src="https://user-images.githubusercontent.com/21195947/66465140-3359a980-ea78-11e9-86aa-05159d1fe35c.png" width="202" height="355">
 
 
 ## Team Stats View
