@@ -74,7 +74,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/awayTeamIcon"
                 android:layout_width="150dp"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                android:layout_margin="5dp"/>
 
             <TextView
                 android:id="@+id/awayTeamTitle"
